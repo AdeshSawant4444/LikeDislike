@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Like Dislike</title>
+    
+
+</head>
+<body>
+
+      
+<center>
+
+  <button id="like-button" data-count="{{ like_count }}">Like ({{ like_count }})</button>
+
+  <button id="dislike-button" data-count="{{ dislike_count }}">Dislike ({{ dislike_count }})</button>
+
+</center>
+
+  <script>
+    $('#like-button').click(function() {
+      $.ajax({
+        url: "/like/",
+        method: 'POST',
+        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function(data) {
+          $('#like-button').text('Like (' + data.like_count + ')');
+        }
+      });
+    });
+  
+    $('#dislike-button').click(function() {
+      $.ajax({
+        url: '/dislike/',
+        method: 'POST',
+        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function(data) {
+          $('#dislike-button').text('Dislike (' + data.dislike_count + ')');
+        }
+      });
+    });
+  </script>
+ 
+   
+</body>
+</html>
